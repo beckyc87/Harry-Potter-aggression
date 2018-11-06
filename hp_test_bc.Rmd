@@ -9,10 +9,24 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r, message=FALSE}
+```{r, message = FALSE}
 library(tidyverse)
 hp_data <- read.csv("harry_potter_aggression_full.csv")
 
 ```
 
 Updating docs
+Let's make a graph of Harry vs. Draco acts of aggression
+```{r}
+
+hp_graph <- hp_data %>% 
+  filter(Name == "Harry" | Name == "Draco Malfoy") %>% 
+  select(Name, book, agg.per.mention) %>% 
+  ggplot(aes(x = book, y = agg.per.mention)) +
+  geom_col(aes(fill = Name), position ="dodge") + #position dodge puts column next to each other
+  coord_flip()
+
+hp_graph
+
+```
+
